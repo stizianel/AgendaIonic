@@ -18,6 +18,8 @@ export class HomePage {
 
   @ViewChild('signupSlider') signupSlider: any;
 
+  //questionarioForm: FormGroup;
+
   slideOneForm: FormGroup;
   slideTwoForm: FormGroup;
   slideThreeForm: FormGroup;
@@ -43,9 +45,8 @@ export class HomePage {
       cellulare: [''],
       email: [''],
       altMail: ['']
-    });
-
-    this.slideTwoForm = formBuilder.group({
+     });
+     this.slideTwoForm = formBuilder.group({
       presso: [''],
       indirizzo: ['', Validators.required],
       cap: [''],
@@ -58,9 +59,8 @@ export class HomePage {
       comuneC: [''],
       localitaC: [''],
       provinciaC: ['']
-    });
-
-    this.slideThreeForm = formBuilder.group({
+     });
+     this.slideThreeForm = formBuilder.group({
       commPreferita: [''],
       datiPersonali: [''],
       datiSensibili: [''],
@@ -120,15 +120,16 @@ export class HomePage {
       email: this.contact.Mail,
       altMail: this.contact.MailAlternativa
     });
-
     this.slideTwoForm.patchValue({
       presso: this.contact.Presso,
       comune: this.contact.Comune,
       cap: this.contact.CAP,
       localita: this.contact.Localita,
-      provincia: this.contact.Provincia
+      pressoC: this.contact.PressoC,
+      comuneC: this.contact.ComuneC,
+      capC: this.contact.CAPC,
+      localitaC: this.contact.LocalitaC
     });
-
     this.slideThreeForm.patchValue({
       commPreferita: this.contact.CommPreferita,
       datiPersonali: this.contact.DatiPersonali,
@@ -150,7 +151,7 @@ export class HomePage {
       numeroAutomobili: this.contact.NumeroAutomobili,
       numeroNatanti: this.contact.NumeroNatanti,
       numeroPolizzeConcorrenza: this.contact.NumeroPolizzeConcorrenza
-    })
+    });
     console.log(this.slideOneForm);
   }
 
@@ -171,10 +172,12 @@ export class HomePage {
     else if(!this.slideTwoForm.valid){
       this.signupSlider.slideTo(1);
     }
+    else if(!this.slideThreeForm.valid){
+      this.signupSlider.slideTo(2);
+    }
     else {
       console.log("Success");
       console.log(this.slideOneForm.value);
-      console.log(this.slideTwoForm.value);
     }
   }
 

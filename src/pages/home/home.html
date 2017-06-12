@@ -166,23 +166,7 @@
                     <ion-input formControlName="provincia" type="text"></ion-input>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
-            
-
-            <!--<ion-item>
-              <ion-label floating>Privacy</ion-label>
-              <ion-select formControlName="privacy" [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)">
-                <ion-option value="public" checked="true">Public</ion-option>
-                <ion-option value="friends">Friends Only</ion-option>
-                <ion-option value="private">Private</ion-option>
-              </ion-select>
-            </ion-item>
-
-            <ion-item>
-              <ion-label floating>Bio</ion-label>
-              <ion-textarea formControlName="bio"></ion-textarea>
-            </ion-item>-->
-            
+              </ion-grid>           
           </form>
         </ion-list>
         </ion-card-content>
@@ -230,31 +214,68 @@
                     <ion-input formControlName="provinciaC" type="text"></ion-input>
                   </ion-col>
                 </ion-row>
-              </ion-grid>
-            
-
-            <!--<ion-item>
-              <ion-label floating>Privacy</ion-label>
-              <ion-select formControlName="privacy" [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)">
-                <ion-option value="public" checked="true">Public</ion-option>
-                <ion-option value="friends">Friends Only</ion-option>
-                <ion-option value="private">Private</ion-option>
-              </ion-select>
-            </ion-item>
-
-            <ion-item>
-              <ion-label floating>Bio</ion-label>
-              <ion-textarea formControlName="bio"></ion-textarea>
-            </ion-item>-->
-            
+              </ion-grid>            
           </form>
         </ion-list>
         </ion-card-content>
       </ion-card>
-
-      <button ion-button full color="primary" (click)="save()">Create Account!</button>
-      
     </ion-slide>
+
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>Consensi</ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="slideThreeForm">
+            <ion-grid>
+              <ion-row>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Com.preferita</ion-label>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Dati Personali</ion-label>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Dati Sensibili</ion-label>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Prom.Commerciale</ion-label>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Prom.Terzi</ion-label>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-label stacked>Profilazione</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="commPreferita"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="datiPersonali"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="datiSensibili"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="promozioneCommerciale"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="promozioneTerzi"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-2>
+                  <ion-checkbox formControlName="profilazione"></ion-checkbox>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+             </form>
+        </ion-card-content>
+      </ion-card>
+
+      <button ion-button full color="primary" (click)="save()">Salva Questionario!</button>
+
+    </ion-slide>
+
   </ion-slides>
 
 </ion-content>
