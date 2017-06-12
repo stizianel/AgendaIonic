@@ -68,6 +68,55 @@
               <ion-item *ngIf="!slideOneForm.controls.persona.valid  && (slideOneForm.controls.persona.dirty || submitAttempt)">
                     <p>inserire F - fisica o G - giuridica.</p>
               </ion-item>
+
+              <ion-item>
+                <ion-label floating>Data di Nascita</ion-label>
+                <ion-datetime displayFormat="D/M/YYYY" pickerFormat="D/M/YYYY" formControlName="dataNascita">
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label floating>Sesso</ion-label>
+                <ion-input formControlName="sesso" type="text" [class.invalid]="!slideOneForm.controls.sesso.valid && (slideOneForm.controls.sesso.dirty || submitAttempt)"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="!slideOneForm.controls.sesso.valid  && (slideOneForm.controls.sesso.dirty || submitAttempt)">
+                    <p>inserire M - maschio o F - femmina.</p>
+              </ion-item>
+
+            </form>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>Preferiti</ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <form [formGroup]="slideOneForm">
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col ion-item col-4>
+                    <ion-label floating>Telefono</ion-label>
+                    <ion-input type="tel" formControlName="telefono"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-4>
+                    <ion-label floating>Fax</ion-label>
+                    <ion-input type="tel" formControlName="fax"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-4>
+                    <ion-label floating>Cellulare</ion-label>
+                    <ion-input type="tel" formControlName="cellulare"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Mail Alternativa</ion-label>
+                <ion-input formControlName="altMail" type="email"></ion-input>
+            </ion-item>
             </form>
           </ion-list>
         </ion-card-content>
@@ -75,39 +124,133 @@
     </ion-slide>
 
     <ion-slide>
-      <ion-list no-lines>
+      <ion-card>
+        <ion-card-header>Indirizzo principale</ion-card-header>
+        <ion-card-content>
+        <ion-list no-lines>
 
-        <form [formGroup]="slideTwoForm">
+          <form [formGroup]="slideTwoForm">
 
-          <ion-item>
-            <ion-label floating>Username</ion-label>
-            <ion-input formControlName="username" type="text" [class.invalid]="!slideTwoForm.controls.username.valid && (slideTwoForm.controls.username.dirty || submitAttempt)"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label floating>Presso</ion-label>
+              <ion-input formControlName="presso" type="text"></ion-input>
+            </ion-item>
 
-          <ion-item *ngIf="slideTwoForm.controls.username.pending">
-                <p>Checking username...</p>
-          </ion-item>
+            <ion-item>
+              <ion-label floating>Indirizzo</ion-label>
+              <ion-input formControlName="indirizzo" type="text" [class.invalid]="!slideTwoForm.controls.indirizzo.valid && (slideTwoForm.controls.indirizzo.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!slideTwoForm.controls.indirizzo.valid  && (slideTwoForm.controls.indirizzo.dirty || submitAttempt)">
+                    <p>indirizzo obbligatorio</p>
+            </ion-item>
+        
+              <ion-grid>
+                <ion-row>
+                  <ion-col ion-item col-9>
+                   <ion-label floating>Comune</ion-label>
+                    <ion-input formControlName="comune" type="text"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-3>
+                   <ion-label floating>CAP</ion-label>
+                    <ion-input formControlName="cap" type="text"></ion-input>
+                  </ion-col>
+                </ion-row>
 
-          <ion-item *ngIf="!slideTwoForm.controls.username.valid && !slideTwoForm.controls.username.pending && (slideTwoForm.controls.username.dirty || submitAttempt)">
-                <p>Sorry, that username can not be used!</p>
-          </ion-item>
+                <ion-row>
+                  <ion-col ion-item col-9>
+                   <ion-label floating>Localita</ion-label>
+                    <ion-input formControlName="localita" type="text"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-3>
+                   <ion-label floating>Provincia</ion-label>
+                    <ion-input formControlName="provincia" type="text"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            
 
-          <ion-item>
-            <ion-label floating>Privacy</ion-label>
-            <ion-select formControlName="privacy" [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)">
-              <ion-option value="public" checked="true">Public</ion-option>
-              <ion-option value="friends">Friends Only</ion-option>
-              <ion-option value="private">Private</ion-option>
-            </ion-select>
-          </ion-item>
+            <!--<ion-item>
+              <ion-label floating>Privacy</ion-label>
+              <ion-select formControlName="privacy" [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)">
+                <ion-option value="public" checked="true">Public</ion-option>
+                <ion-option value="friends">Friends Only</ion-option>
+                <ion-option value="private">Private</ion-option>
+              </ion-select>
+            </ion-item>
 
-          <ion-item>
-            <ion-label floating>Bio</ion-label>
-            <ion-textarea formControlName="bio"></ion-textarea>
-          </ion-item>
+            <ion-item>
+              <ion-label floating>Bio</ion-label>
+              <ion-textarea formControlName="bio"></ion-textarea>
+            </ion-item>-->
+            
+          </form>
+        </ion-list>
+        </ion-card-content>
+      </ion-card>
 
-        </form>
-      </ion-list>
+       <ion-card>
+        <ion-card-header>Indirizzo di corrispondenza</ion-card-header>
+        <ion-card-content>
+        <ion-list no-lines>
+
+          <form [formGroup]="slideTwoForm">
+
+            <ion-item>
+              <ion-label floating>Presso</ion-label>
+              <ion-input formControlName="pressoC" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Indirizzo</ion-label>
+              <ion-input formControlName="indirizzoC" type="text" [class.invalid]="!slideTwoForm.controls.indirizzoC.valid && (slideTwoForm.controls.indirizzoC.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!slideTwoForm.controls.indirizzoC.valid  && (slideTwoForm.controls.indirizzoC.dirty || submitAttempt)">
+                    <p>indirizzo obbligatorio</p>
+            </ion-item>
+        
+              <ion-grid>
+                <ion-row>
+                  <ion-col ion-item col-9>
+                   <ion-label floating>Comune</ion-label>
+                    <ion-input formControlName="comuneC" type="text"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-3>
+                   <ion-label floating>CAP</ion-label>
+                    <ion-input formControlName="capC" type="text"></ion-input>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col ion-item col-9>
+                   <ion-label floating>Localita</ion-label>
+                    <ion-input formControlName="localitaC" type="text"></ion-input>
+                  </ion-col>
+                  <ion-col ion-item col-3>
+                   <ion-label floating>Provincia</ion-label>
+                    <ion-input formControlName="provinciaC" type="text"></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            
+
+            <!--<ion-item>
+              <ion-label floating>Privacy</ion-label>
+              <ion-select formControlName="privacy" [class.invalid]="!slideTwoForm.controls.privacy.valid && (slideTwoForm.controls.privacy.dirty || submitAttempt)">
+                <ion-option value="public" checked="true">Public</ion-option>
+                <ion-option value="friends">Friends Only</ion-option>
+                <ion-option value="private">Private</ion-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label floating>Bio</ion-label>
+              <ion-textarea formControlName="bio"></ion-textarea>
+            </ion-item>-->
+            
+          </form>
+        </ion-list>
+        </ion-card-content>
+      </ion-card>
 
       <button ion-button full color="primary" (click)="save()">Create Account!</button>
       

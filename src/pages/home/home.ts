@@ -20,6 +20,7 @@ export class HomePage {
 
   slideOneForm: FormGroup;
   slideTwoForm: FormGroup;
+  slideThreeForm: FormGroup;
 
   contact = new Contact;
 
@@ -29,35 +30,128 @@ export class HomePage {
               public formBuilder: FormBuilder, 
               public agendaApi: AgendaApi,
               public loadingController: LoadingController ) {
-
-    this.slideOneForm = formBuilder.group({
-      denominazione: [this.contact.Denominazione, Validators.compose([Validators.maxLength(60), Validators.pattern('[a-zA-Z]*'), Validators.required])],
-      nome: [this.contact.Nome, Validators.compose([Validators.maxLength(25), Validators.pattern('[a-zA-Z]*'), Validators.required])],
-      codfiscale: [this.contact.CodFiscale, Validators.compose([Validators.maxLength(16), Validators.pattern('^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$'), Validators.required])],
-      piva: [this.contact.PIva, Validators.compose([Validators.maxLength(11), Validators.pattern('[0-9]{11}')])],
-      persona: [this.contact.Persona, Validators.compose([Validators.maxLength(1),Validators.pattern('[FG]')])]
+     this.slideOneForm = formBuilder.group({
+      denominazione: ['', Validators.compose([Validators.maxLength(60), Validators.pattern('[a-zA-Z]*'), Validators.required])],
+      nome: ['', Validators.compose([Validators.maxLength(25), Validators.pattern('[a-zA-Z]*'), Validators.required])],
+      codfiscale: ['', Validators.compose([Validators.maxLength(16), Validators.pattern('^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$'), Validators.required])],
+      piva: ['', Validators.compose([Validators.maxLength(11), Validators.pattern('[0-9]{11}')])],
+      persona: ['', Validators.compose([Validators.maxLength(1),Validators.pattern('[FG]')])],
+      dataNascita: [''],
+      sesso: ['', Validators.compose([Validators.maxLength(1),Validators.pattern('[MF]')])],
+      telefono: [''],
+      fax: [''],
+      cellulare: [''],
+      email: [''],
+      altMail: ['']
     });
 
     this.slideTwoForm = formBuilder.group({
-      username: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*')]), UsernameValidator.checkUsername],
-      privacy: ['', Validators.required],
-      bio: ['']
+      presso: [''],
+      indirizzo: ['', Validators.required],
+      cap: [''],
+      comune: ['', Validators.required],
+      localita: [''],
+      provincia: [''],
+      pressoC: [''],
+      indirizzoC: [''],
+      capC: [''],
+      comuneC: [''],
+      localitaC: [''],
+      provinciaC: ['']
+    });
+
+    this.slideThreeForm = formBuilder.group({
+      commPreferita: [''],
+      datiPersonali: [''],
+      datiSensibili: [''],
+      promozioneCommerciale: [''],
+      promozioneTerzi: [''],
+      profilazione: [''],
+      coniugato: [''],
+      denominazioneConvivente: [''],
+      codiceFiscaleConvivente: [''],
+      professioneConvivente: [''],
+      dataNascitaCovivente: [''],
+      professione: [''],
+      abitazioneProprieta: [''],
+      tipoAbitazione: [''],
+      numeroFigli: [''],
+      numeroAnimali: [''],
+      numeroImmobili: [''],
+      numeroAutomobili: [''],
+      numeroNatanti: [''],
+      numeroPolizzeConcorrenza: ['']
     });
 
   }
 
   ionViewDidLoad(){
+    
     console.log('ionViewDidLoad HomePage');
     let loader = this.loadingController.create({
       content: 'recupero dati ...'
     });
     loader.present().then(() => {
-       this.agendaApi.getCinetto('99999').subscribe(data => {
-        this.contact = JSON.parse(data);
+       this.agendaApi.getCinetto('99999').subscribe(
+        (contact: string) => {
+        //this.contact = JSON.parse(contact);
+        this.onContactRetrived(contact);
         loader.dismiss();
     });
           console.log("tipo:", typeof this.contact);  
     });
+  }
+
+  onContactRetrived(contact: string){
+    console.log("tipoOnContact:", typeof this.contact);
+    this.contact = JSON.parse(contact);
+    console.log("tipoOnContact:",contact);
+
+    this.slideOneForm.patchValue({
+      denominazione: this.contact.Denominazione,
+      nome: this.contact.Nome,
+      codfiscale: this.contact.CodFiscale,
+      piva: this.contact.PIva,
+      persona: this.contact.Persona,
+      dataNascita: this.contact.DataNascita,
+      telefono: this.contact.Telefono,
+      fax: this.contact.Fax,
+      cellulare: this.contact.Cellulare,
+      email: this.contact.Mail,
+      altMail: this.contact.MailAlternativa
+    });
+
+    this.slideTwoForm.patchValue({
+      presso: this.contact.Presso,
+      comune: this.contact.Comune,
+      cap: this.contact.CAP,
+      localita: this.contact.Localita,
+      provincia: this.contact.Provincia
+    });
+
+    this.slideThreeForm.patchValue({
+      commPreferita: this.contact.CommPreferita,
+      datiPersonali: this.contact.DatiPersonali,
+      datiSensibili: this.contact.DatiSensibili,
+      promozioneCommerciale: this.contact.PromozioneCommerciale,
+      promozioneTerzi: this.contact.PromozioneTerzi,
+      profilazione: this.contact.Profilazione,
+      coniugato: this.contact.Coniugato,
+      denominazioneConvivente: this.contact.DenominazioneConvivente,
+      codiceFiscaleConvivente: this.contact.CodiceFiscaleConvivente,
+      professioneConvivente: this.contact.ProfessioneConvivente,
+      dataNascitaCovivente: this.contact.DataNascitaConvivente,
+      professione: this.contact.Professione,
+      abitazioneProprieta: this.contact.AbitazioneProprieta,
+      tipoAbitazione: this.contact.TipoAbitazione,
+      numeroFigli: this.contact.NumeroFigli,
+      numeroAnimali: this.contact.NumeroAnimali,
+      numeroImmobili: this.contact.NumeroImmobili,
+      numeroAutomobili: this.contact.NumeroAutomobili,
+      numeroNatanti: this.contact.NumeroNatanti,
+      numeroPolizzeConcorrenza: this.contact.NumeroPolizzeConcorrenza
+    })
+    console.log(this.slideOneForm);
   }
 
   next(){
