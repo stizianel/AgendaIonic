@@ -150,6 +150,9 @@
                    <ion-label floating>Comune</ion-label>
                     <ion-input formControlName="comune" type="text"></ion-input>
                   </ion-col>
+                  <ion-item *ngIf="!slideTwoForm.controls.comune.valid  && (slideTwoForm.controls.comune.dirty || submitAttempt)">
+                    <p>Comune obbligatorio</p>
+                  </ion-item>
                   <ion-col ion-item col-3>
                    <ion-label floating>CAP</ion-label>
                     <ion-input formControlName="cap" type="text"></ion-input>
@@ -266,9 +269,104 @@
                 <ion-col ion-item col-2>
                   <ion-checkbox formControlName="profilazione"></ion-checkbox>
                 </ion-col>
+                <!--<ion-item *ngIf="!slideThreeForm.controls.datiPersonali.valid  && (slideThreeForm.controls.datiPersonali.dirty || submitAttempt)">
+                    <p>Il consenso ai dati personali è obbligatorio</p>
+                </ion-item>-->
               </ion-row>
             </ion-grid>
              </form>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>Dati Convivente</ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="slideThreeForm">
+            <ion-grid>
+              <ion-row>
+                <ion-col ion-item col-12>
+                   <ion-label floating>Denominazione Convivente</ion-label>
+                   <ion-input formControlName="denominazioneConvivente" type="text"></ion-input>
+                </ion-col> 
+              </ion-row>
+              <ion-row>
+                <ion-col ion-item col-4>
+                   <ion-label floating>Codice Fiscale Convivente</ion-label>
+                   <ion-input formControlName="codiceFiscaleConvivente" type="text"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-4>
+                   <ion-label floating>Professione Convivente</ion-label>
+                   <ion-input formControlName="professioneConvivente" type="text"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-4>
+                   <ion-label floating>Data Nascita Convivente</ion-label>
+                   <ion-datetime displayFormat="D/M/YYYY" pickerFormat="D/M/YYYY" formControlName="dataNascitaConvivente"></ion-datetime>
+                </ion-col>   
+              </ion-row>
+            </ion-grid>
+          </form>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>Dati Questionario</ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="slideThreeForm">
+            <ion-grid>
+              <ion-row>
+                <ion-col ion-item col-4>
+                   <ion-label floating>Professione</ion-label>
+                   <ion-select formControlName="professione">
+                    <ion-option>Impiegato</ion-option>
+                    <ion-option>Pensionato</ion-option>
+                    <ion-option>Dirigente</ion-option>
+                    <ion-option>Studente</ion-option>
+                    <ion-option>Non Occupato</ion-option>
+                   </ion-select>
+                </ion-col>
+                <ion-col ion-item col-4>
+                  <ion-label>Abitazione di proprietà</ion-label>
+                  <ion-checkbox formControlName="abitazioneProprieta"></ion-checkbox>
+                </ion-col>
+                <ion-col ion-item col-4>
+                  <ion-label floating>Tipo Abitazione</ion-label>
+                  <ion-select formControlName="tipoAbitazione">
+                    <ion-option>Appartamento</ion-option>
+                    <ion-option>Casa singola</ion-option>
+                    <ion-option>Villa di pregio</ion-option>
+                    <ion-option>Bifamiliare</ion-option>
+                    <ion-option>Trifamiliare</ion-option>
+                    <ion-option>Quadrifamiliare</ion-option>
+                    <ion-option>Villetta a schiera</ion-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Figli</ion-label>
+                    <ion-input type="number" formControlName="numeroFigli"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Animali</ion-label>
+                    <ion-input type="number" formControlName="numeroAnimali"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Immobili</ion-label>
+                    <ion-input type="number" formControlName="numeroImmobili"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Automobili</ion-label>
+                    <ion-input type="number" formControlName="numeroAutomobili"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Natanti</ion-label>
+                    <ion-input type="number" formControlName="numeroNatanti"></ion-input>
+                </ion-col>
+                <ion-col ion-item col-2>
+                    <ion-label floating>Polizze conc.</ion-label>
+                    <ion-input type="number" formControlName="numeroPolizzeConcorrenza"></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </form>
         </ion-card-content>
       </ion-card>
 

@@ -33,8 +33,8 @@ export class HomePage {
               public agendaApi: AgendaApi,
               public loadingController: LoadingController ) {
      this.slideOneForm = formBuilder.group({
-      denominazione: ['', Validators.compose([Validators.maxLength(60), Validators.pattern('[a-zA-Z]*'), Validators.required])],
-      nome: ['', Validators.compose([Validators.maxLength(25), Validators.pattern('[a-zA-Z]*'), Validators.required])],
+      denominazione: ['', Validators.compose([Validators.maxLength(60), Validators.required])],
+      nome: ['', Validators.compose([Validators.maxLength(25)])],
       codfiscale: ['', Validators.compose([Validators.maxLength(16), Validators.pattern('^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$'), Validators.required])],
       piva: ['', Validators.compose([Validators.maxLength(11), Validators.pattern('[0-9]{11}')])],
       persona: ['', Validators.compose([Validators.maxLength(1),Validators.pattern('[FG]')])],
@@ -62,7 +62,7 @@ export class HomePage {
      });
      this.slideThreeForm = formBuilder.group({
       commPreferita: [''],
-      datiPersonali: [''],
+      datiPersonali: ['', Validators.required],
       datiSensibili: [''],
       promozioneCommerciale: [''],
       promozioneTerzi: [''],
@@ -71,7 +71,7 @@ export class HomePage {
       denominazioneConvivente: [''],
       codiceFiscaleConvivente: [''],
       professioneConvivente: [''],
-      dataNascitaCovivente: [''],
+      dataNascitaConvivente: [''],
       professione: [''],
       abitazioneProprieta: [''],
       tipoAbitazione: [''],
@@ -178,6 +178,8 @@ export class HomePage {
     else {
       console.log("Success");
       console.log(this.slideOneForm.value);
+      console.log(this.slideTwoForm.value);
+      console.log(this.slideThreeForm.value);
     }
   }
 
