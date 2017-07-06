@@ -1,4 +1,8 @@
 export class Contact {
+    Pin: string;
+    ErrorCode: string;
+    ErrorDesc: string;
+    Source: string;
     RecID: number;
     CFPiva: string;
     Utente: string;
@@ -8,19 +12,19 @@ export class Contact {
     Denominazione: string;
     Nome: string;
     CodFiscale: string;
-    PIva: string;
+    Piva: string;
     Persona: string;
     DataNascita: string;
     Sesso: string;
     Presso: string;
     Indirizzo: string;
-    CAP: string;
+    Cap: string;
     Comune: string;
     Localita: string;
     Provincia: string;
     PressoC: string;
     IndirizzoC: string;
-    CAPC: string;
+    CapC: string;
     ComuneC: string;
     LocalitaC: string;
     ProvinciaC: string;

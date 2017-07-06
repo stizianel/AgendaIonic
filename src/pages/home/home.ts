@@ -19,6 +19,7 @@ export class HomePage {
   @ViewChild('signupSlider') signupSlider: any;
 
   //questionarioForm: FormGroup;
+  errorMessage: string;
 
   slideOneForm: FormGroup;
   slideTwoForm: FormGroup;
@@ -111,7 +112,7 @@ export class HomePage {
       denominazione: this.contact.Denominazione,
       nome: this.contact.Nome,
       codfiscale: this.contact.CodFiscale,
-      piva: this.contact.PIva,
+      piva: this.contact.Piva,
       persona: this.contact.Persona,
       dataNascita: this.contact.DataNascita,
       telefono: this.contact.Telefono,
@@ -123,11 +124,11 @@ export class HomePage {
     this.slideTwoForm.patchValue({
       presso: this.contact.Presso,
       comune: this.contact.Comune,
-      cap: this.contact.CAP,
+      cap: this.contact.Cap,
       localita: this.contact.Localita,
       pressoC: this.contact.PressoC,
       comuneC: this.contact.ComuneC,
-      capC: this.contact.CAPC,
+      capC: this.contact.CapC,
       localitaC: this.contact.LocalitaC
     });
     this.slideThreeForm.patchValue({
@@ -176,11 +177,24 @@ export class HomePage {
       this.signupSlider.slideTo(2);
     }
     else {
-      console.log("Success");
-      console.log(this.slideOneForm.value);
-      console.log(this.slideTwoForm.value);
-      console.log(this.slideThreeForm.value);
+      let p = Object.assign({}, this.contact, this.slideOneForm.value, this.slideTwoForm.value, this.slideThreeForm.value);
+      
+       console.log("p è di tipo:", typeof p);
+
+      this.agendaApi.createContact(p)
+        .subscribe(
+          () => this.onSaveComplete(),
+          (error: any) => this.errorMessage = <any>error
+        );
+      console.log("save errore: " + this.errorMessage);
+      // console.log(this.slideOneForm.value);
+      // console.log(this.slideTwoForm.value);
+      // console.log(this.slideThreeForm.value);
     }
   }
-
+  onSaveComplete(): void{
+    this.slideOneForm.reset();
+    this.slideTwoForm.reset();
+    this.slideThreeForm.reset();
+  }
 }
