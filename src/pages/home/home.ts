@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,6 +17,8 @@ import { AgendaApi } from './../../shared/agenda-api.service';
 })
 export class HomePage {
 
+  tempPin = "99999";
+
   @ViewChild('signupSlider') signupSlider: any;
 
   //questionarioForm: FormGroup;
@@ -32,7 +35,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, 
               public formBuilder: FormBuilder, 
               public agendaApi: AgendaApi,
-              public loadingController: LoadingController ) {
+              public loadingController: LoadingController,
+              public datepipe: DatePipe ) {
      this.slideOneForm = formBuilder.group({
       denominazione: ['', Validators.compose([Validators.maxLength(60), Validators.required])],
       nome: ['', Validators.compose([Validators.maxLength(25)])],
@@ -95,6 +99,7 @@ export class HomePage {
     loader.present().then(() => {
        this.agendaApi.getCinetto('99999').subscribe(
         (contact: string) => {
+        console.log("subscribe", contact);
         //this.contact = JSON.parse(contact);
         this.onContactRetrived(contact);
         loader.dismiss();
@@ -103,10 +108,15 @@ export class HomePage {
     });
   }
 
+  // this.contact= new Contact();
+  // this.onContactRetrived(this.contact);
+  //}
+
+
   onContactRetrived(contact: string){
-    console.log("tipoOnContact:", typeof this.contact);
+    //console.log("tipoOnContact:", typeof this.contact);
     this.contact = JSON.parse(contact);
-    console.log("tipoOnContact:",contact);
+    console.log("onContectRetrived:", this.contact);
 
     this.slideOneForm.patchValue({
       denominazione: this.contact.Denominazione,
@@ -153,7 +163,7 @@ export class HomePage {
       numeroNatanti: this.contact.NumeroNatanti,
       numeroPolizzeConcorrenza: this.contact.NumeroPolizzeConcorrenza
     });
-    console.log(this.slideOneForm);
+    console.log("slide1:", this.slideOneForm);
   }
 
   next(){
@@ -177,15 +187,24 @@ export class HomePage {
       this.signupSlider.slideTo(2);
     }
     else {
-      let p = Object.assign({}, this.contact, this.slideOneForm.value, this.slideTwoForm.value, this.slideThreeForm.value);
-      
-       console.log("p è di tipo:", typeof p);
+      let newContact = this.formToDTO(this.slideOneForm, this.slideTwoForm, this.slideThreeForm, this.contact)
 
-      this.agendaApi.createContact(p)
+      console.log("wcontact è di tipo:", typeof newContact);
+
+      this.agendaApi.createContact(newContact, '99999')
         .subscribe(
-          () => this.onSaveComplete(),
+          (resp) => {
+            alert(resp);
+            console.log("RESP:", resp);
+            this.onSaveComplete();
+          },
           (error: any) => this.errorMessage = <any>error
         );
+
+      // this.agendaApi.testPost().subscribe(
+      //   () =>{}
+      // );
+
       console.log("save errore: " + this.errorMessage);
       // console.log(this.slideOneForm.value);
       // console.log(this.slideTwoForm.value);
@@ -196,5 +215,63 @@ export class HomePage {
     this.slideOneForm.reset();
     this.slideTwoForm.reset();
     this.slideThreeForm.reset();
+  }
+  formToDTO(slide1: FormGroup, slide2: FormGroup, slide3: FormGroup, oldContact: Contact): Contact{
+    let c = new Contact();
+
+    c.Pin = this.tempPin;
+    c.ErrorCode = oldContact.ErrorCode;
+    c.ErrorDesc = oldContact.ErrorDesc;
+    c.Source= oldContact.Source;
+    c.Utente = oldContact.Utente;
+    c.Stato = oldContact.Stato;
+    c.Codice = oldContact.Codice;
+    c.RecID = oldContact.RecID;
+
+    let wcf = slide1.get('codfiscale').value;
+    let wpiva = slide1.get('piva').value;
+    c.CFPiva = wcf ? wcf : wpiva;
+    c.CodFiscale = slide1.get('codfiscale').value;
+    c.Piva = slide1.get('piva').value;
+    c.Denominazione = slide1.get('denominazione').value;
+    c.Nome = slide1.get('nome').value;
+    c.Persona = slide1.get('persona').value;
+    c.DataNascita  = this.datepipe.transform(slide1.get('dataNascita').value, 'dd-MM-yyyy');
+    //c.DataNascita = slide1.get('dataNascita').value
+    c.Telefono = slide1.get('telefono').value;
+    c.Fax = slide1.get('fax').value;
+    c.Cellulare = slide1.get('cellulare').value;
+    c.Mail = slide1.get('email').value;
+    c.MailAlternativa = slide1.get('altMail').value;
+    c.Presso = slide2.get('presso').value;
+    c.Comune = slide2.get('comune').value;
+    c.Cap = slide2.get('cap').value;
+    c.Localita = slide2.get('localita').value;
+    c.PressoC = slide2.get('pressoC').value;
+    c.ComuneC = slide2.get('comuneC').value;
+    c.CapC = slide2.get('capC').value;
+    c.LocalitaC = slide2.get('localitaC').value;
+    c.CommPreferita = slide3.get('commPreferita').value;
+    c.DatiPersonali = slide3.get('datiPersonali').value ? 'S' : 'N';
+    c.DatiSensibili = slide3.get('datiSensibili').value ? 'S' : 'N';
+    c.PromozioneCommerciale = slide3.get('promozioneCommerciale').value ? 'S' : 'N';
+    c.PromozioneTerzi = slide3.get('promozioneTerzi').value ? 'S' : 'N';
+    c.Profilazione = slide3.get('profilazione').value  ? 'S' : 'N';
+    c.Coniugato = slide3.get('coniugato').value ? 'S' : 'N';
+    c.DenominazioneConvivente = slide3.get('denominazioneConvivente').value;
+    c.CodiceFiscaleConvivente = slide3.get('codiceFiscaleConvivente').value;
+    c.ProfessioneConvivente = slide3.get('professioneConvivente').value;
+    c.DataNascitaConvivente = this.datepipe.transform(slide3.get('dataNascitaConvivente').value,'dd-MM-yyyy') ;
+    c.Professione = slide3.get('professione').value;
+    c.AbitazioneProprieta = slide3.get('abitazioneProprieta').value ? 'S' : 'N';
+    c.TipoAbitazione = slide3.get('tipoAbitazione').value;
+    c.NumeroFigli = slide3.get('numeroFigli').value;
+    c.NumeroAnimali = slide3.get('numeroAnimali').value;
+    c.NumeroImmobili = slide3.get('numeroImmobili').value;
+    c.NumeroAutomobili = slide3.get('numeroAutomobili').value;
+    c.NumeroNatanti = slide3.get('numeroNatanti').value;
+    c.NumeroPolizzeConcorrenza = slide3.get('numeroPolizzeConcorrenza').value;   
+    
+    return c;
   }
 }

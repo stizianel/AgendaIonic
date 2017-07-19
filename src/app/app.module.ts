@@ -8,12 +8,24 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CustomerlistPage } from './../pages/customerlist/customerlist';
+import { MyCustomersPage } from './../pages/mycustomers/mycustomers';
+import { CustomerDetailPage } from './../pages/customer-detail/customer-detail';
+import { CustomerHomePage } from './../pages/customer-home/customer-home';
+import { CustomerProductsPage } from './../pages/customer-products/customer-products';
+
 import { AgendaApi } from './../shared/agenda-api.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    CustomerlistPage,
+    MyCustomersPage,
+    CustomerDetailPage,
+    CustomerHomePage,
+    CustomerProductsPage
   ],
   imports: [
     BrowserModule,
@@ -23,12 +35,18 @@ import { AgendaApi } from './../shared/agenda-api.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    CustomerlistPage,
+    MyCustomersPage,
+    CustomerDetailPage,
+    CustomerHomePage,
+    CustomerProductsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AgendaApi,
+    DatePipe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,5 +1,11 @@
 {
   "name": "advanced-forms",
   "app_id": "41f09460",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost:49697/Api/Questionarios"
+    }
+  ]
 }

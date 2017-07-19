@@ -12,8 +12,11 @@ export class AgendaApi {
 private risposta: string;
 private azureUrl = 'https://orion101.azurewebsites.net/api/TestAgendaPost?code=1NVtbxn5bokSfhgAf2I0BKQ/t9SQkWPBm6T7wYRupwTGWaDZt5xN2Q==';
 private agendaUrl = 'http://localhost:5050/AgeService.svc/contact';
-private agendaPost = '/v1';
+//private agendaUrl = 'http://2.234.133.94/WS_AgeDemo/AgeService.svc/contact/';
+//private agendaPost = 'http://localhost:5050/AgeService.svc/updatecontact';
+//private agendaPost = 'http://localhost:49697/Api/Questionarios';
 private agendaTest = '/test';
+private postResult: any = {};
 private currentContact: any = {};
 private key = 'CNTRRT53L18G224I';
 
@@ -24,24 +27,26 @@ private key = 'CNTRRT53L18G224I';
         return this.http.get(`${this.agendaUrl}/${pid}/${this.key}`)
             .map((response: Response) => {
                 this.currentContact = response.json();
-                console.log(this.currentContact);
+                console.log("getCinetto",this.currentContact);
                 return this.currentContact.GetContactResult;
             });
     }
 
-    createContact(contact: Contact): Observable<any>{
+    createContact(contact: Contact, pid): Observable<any>{
         let headers = new Headers({ 'Content-type': 'application/json' });
-        let options = new RequestOptions ({ headers: headers});
-        //let options = new RequestOptions();
+        //let options = new RequestOptions ({ headers: headers});
+        let options = new RequestOptions();
 
         //let test = new Contact();
 
         console.log("createContact:" + JSON.stringify(contact));
 
-        return this.http.post(this.agendaPost, contact, options)
-            .map((response: Response) => {this.currentContact = response.json();
-                console.log(this.currentContact);
-                return this.currentContact.GetContactResult;
+        //return this.http.post(`${this.agendaPost}/${pid}`, contact, options)
+        return this.http.post("http://localhost:5050/AgeService.svc/updatecontact/99999", 
+            JSON.stringify(contact))
+            .map((response: Response) => {this.postResult = response.json();
+                console.log("dopo MAP", this.postResult);
+                return this.postResult;
         })
             .do(data =>console.log('createContact: ' + JSON.stringify(data)))
             .catch(this.handleError);
@@ -67,6 +72,11 @@ private key = 'CNTRRT53L18G224I';
         let options = new RequestOptions ({ headers: headers});
         return this.http.post(this.agendaTest, {"nome":"Stefano"}, options)
             .map((response: Response) => this.risposta);
+    }
+
+    testPost(){
+        return this.http.post("http://192.168.1.250/WS_AgeDemo/AgeService.svc/bob", "{'nome':'Stefano'}")
+            .map(resp => console.log(resp));
     }
 
      private handleError(error: Response): Observable<any> {
