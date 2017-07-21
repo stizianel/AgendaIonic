@@ -3,7 +3,11 @@
 import { Injectable } from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 
-import 'rxjs';
+import "rxjs/add/operator/timeoutWith";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/catch";
+
 import { Observable } from 'rxjs/Observable';
 import { Contact } from './../models/contact';
 import CryptoJS from 'crypto-js';
@@ -15,9 +19,9 @@ export class AgendaApi {
 private risposta: string;
 //private azureUrl = 'https://orion101.azurewebsites.net/api/TestAgendaPost?code=1NVtbxn5bokSfhgAf2I0BKQ/t9SQkWPBm6T7wYRupwTGWaDZt5xN2Q==';
 //private agendaUrl = 'http://localhost:5050/AgeService.svc/contact';
-//private agendaUrl = 'http://2.234.133.94/WS_AgeDemo/AgeService.svc/contact/';
+private agendaUrl = 'http://2.234.133.94/WS_AgeDemo/AgeService.svc';
 //private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc/contact/';
-private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc';
+//private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc';
 //private agendaPost = 'http://localhost:5050/AgeService.svc/updatecontact';
 //private agendaPost = 'http://localhost:49697/Api/Questionarios';
 private agendaTest = '/test';
@@ -36,7 +40,12 @@ private token: any;
                 this.currentContact = response.json();
                 console.log("getCinetto",this.currentContact);
                 return this.currentContact.GetContactResult;
-            });
+            })
+            .catch(
+		    // This is invoked if/when the Observable returned by `http.get` flags an error.
+		    // Throw an error to the subscriber of the Observable returned by this method.
+		    (error:any) => Observable.throw(error.json().error || 'Server error')
+	        );
     }
 
     createContact(contact: Contact, pid): Observable<any>{
