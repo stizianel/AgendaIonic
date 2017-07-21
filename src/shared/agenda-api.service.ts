@@ -1,3 +1,4 @@
+//import { StatusBar } from '@ionic-native/status-bar';
 
 import { Injectable } from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
@@ -5,26 +6,32 @@ import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { Contact } from './../models/contact';
+import CryptoJS from 'crypto-js';
+
 
 @Injectable()
 export class AgendaApi {
 
 private risposta: string;
-private azureUrl = 'https://orion101.azurewebsites.net/api/TestAgendaPost?code=1NVtbxn5bokSfhgAf2I0BKQ/t9SQkWPBm6T7wYRupwTGWaDZt5xN2Q==';
-private agendaUrl = 'http://localhost:5050/AgeService.svc/contact';
+//private azureUrl = 'https://orion101.azurewebsites.net/api/TestAgendaPost?code=1NVtbxn5bokSfhgAf2I0BKQ/t9SQkWPBm6T7wYRupwTGWaDZt5xN2Q==';
+//private agendaUrl = 'http://localhost:5050/AgeService.svc/contact';
 //private agendaUrl = 'http://2.234.133.94/WS_AgeDemo/AgeService.svc/contact/';
+//private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc/contact/';
+private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc';
 //private agendaPost = 'http://localhost:5050/AgeService.svc/updatecontact';
 //private agendaPost = 'http://localhost:49697/Api/Questionarios';
 private agendaTest = '/test';
 private postResult: any = {};
 private currentContact: any = {};
+private datiLogin: any;
 private key = 'CNTRRT53L18G224I';
+private token: any;
 
     constructor(public http: Http) { }
 
 
     getCinetto(pid) : Observable<any> {
-        return this.http.get(`${this.agendaUrl}/${pid}/${this.key}`)
+        return this.http.get(`${this.agendaUrl}/contact/${pid}/${this.key}`)
             .map((response: Response) => {
                 this.currentContact = response.json();
                 console.log("getCinetto",this.currentContact);
@@ -33,22 +40,21 @@ private key = 'CNTRRT53L18G224I';
     }
 
     createContact(contact: Contact, pid): Observable<any>{
-        let headers = new Headers({ 'Content-type': 'application/json' });
+        //let headers = new Headers({ 'Content-type': 'application/json' });
         //let options = new RequestOptions ({ headers: headers});
-        let options = new RequestOptions();
+        //let options = new RequestOptions();
 
         //let test = new Contact();
 
         console.log("createContact:" + JSON.stringify(contact));
 
         //return this.http.post(`${this.agendaPost}/${pid}`, contact, options)
-        return this.http.post("http://localhost:5050/AgeService.svc/updatecontact/99999", 
-            JSON.stringify(contact))
+        return this.http.post(`${this.agendaUrl}/updatecontact/${pid}`, JSON.stringify(contact))
             .map((response: Response) => {this.postResult = response.json();
                 console.log("dopo MAP", this.postResult);
                 return this.postResult;
         })
-            .do(data =>console.log('createContact: ' + JSON.stringify(data)))
+            .do(data => console.log('createContact: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
@@ -77,6 +83,27 @@ private key = 'CNTRRT53L18G224I';
     testPost(){
         return this.http.post("http://192.168.1.250/WS_AgeDemo/AgeService.svc/bob", "{'nome':'Stefano'}")
             .map(resp => console.log(resp));
+    }
+
+    getToken(){             
+        return this.http.get(`${this.agendaUrl}/token`)
+            .map((res: Response) => {
+                this.token = res.json();
+                console.log("Token:", this.token);
+                return this.token.GetTokenResult;
+            });
+    }
+
+    getLogin(loginData: any, token: any): Observable<any>{
+        let ToHash = loginData.username.toUpperCase() + "|" + loginData.password + "|" + token;
+        let hashCode = CryptoJS.MD5(ToHash);
+        let newTk = hashCode.toString().toLowerCase().replace("-","");
+        return this.http.get(`${this.agendaUrl}/login/${newTk}/${loginData.username}/PC`)
+            .map((res: Response) => {
+                this.datiLogin = res.json();
+                console.log("getLogin:", this.datiLogin);
+                return this.datiLogin.UserLoginResult;
+            })
     }
 
      private handleError(error: Response): Observable<any> {

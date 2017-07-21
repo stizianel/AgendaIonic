@@ -19,8 +19,20 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Non hai ancora selezionato nessun Cliente.</p>
-  <p>Scegli i tuoi Clienti preferiti</p>
+  <h2>Please, Login</h2>
+  <form>
+    <ion-item>
+      <ion-label stacked>Username</ion-label>
+      <ion-input [(ngModel)]="loginData.username" name="username" type="text" placeholder="Username" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input [(ngModel)]="loginData.password" name="password" type="password" placeholder="Password"></ion-input>
+    </ion-item>
+    <button ion-button block color="primary" (click)="loginToAgenda()">Login</button>
+  </form>
+
+  
   <button ion-button color="primary" (click)="goToCustomerList()">Ricerca Clienti</button>
-  <button ion-button color="primary" (click)="goToCustomerList()">Vai al questionario</button>
+  <button ion-button color="primary" (click)="goToQuestionnaire()">Vai al questionario</button>
 </ion-content>

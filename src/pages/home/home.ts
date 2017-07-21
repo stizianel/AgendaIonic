@@ -97,11 +97,12 @@ export class HomePage {
       content: 'recupero dati ...'
     });
     loader.present().then(() => {
-       this.agendaApi.getCinetto('99999').subscribe(
-        (contact: string) => {
-        console.log("subscribe", contact);
-        //this.contact = JSON.parse(contact);
-        this.onContactRetrived(contact);
+       this.agendaApi.getCinetto('99999')
+        .subscribe(
+          (contact: string) => {
+            console.log("subscribe", contact);
+            //this.contact = JSON.parse(contact);
+            this.onContactRetrived(contact);
         loader.dismiss();
     });
           console.log("tipo:", typeof this.contact);  
@@ -194,7 +195,7 @@ export class HomePage {
       this.agendaApi.createContact(newContact, '99999')
         .subscribe(
           (resp) => {
-            alert(resp);
+            alert("Inserimento effettuato");
             console.log("RESP:", resp);
             this.onSaveComplete();
           },
@@ -236,7 +237,7 @@ export class HomePage {
     c.Denominazione = slide1.get('denominazione').value;
     c.Nome = slide1.get('nome').value;
     c.Persona = slide1.get('persona').value;
-    c.DataNascita  = this.datepipe.transform(slide1.get('dataNascita').value, 'dd-MM-yyyy');
+    c.DataNascita  = slide1.get('dataNascita').value ? this.datepipe.transform(slide1.get('dataNascita').value, 'dd-MM-yyyy') : "";
     //c.DataNascita = slide1.get('dataNascita').value
     c.Telefono = slide1.get('telefono').value;
     c.Fax = slide1.get('fax').value;
@@ -251,7 +252,8 @@ export class HomePage {
     c.ComuneC = slide2.get('comuneC').value;
     c.CapC = slide2.get('capC').value;
     c.LocalitaC = slide2.get('localitaC').value;
-    c.CommPreferita = slide3.get('commPreferita').value;
+    let wcommPref: string = slide3.get('commPreferita').value;
+    c.CommPreferita = wcommPref.substring(0,1);
     c.DatiPersonali = slide3.get('datiPersonali').value ? 'S' : 'N';
     c.DatiSensibili = slide3.get('datiSensibili').value ? 'S' : 'N';
     c.PromozioneCommerciale = slide3.get('promozioneCommerciale').value ? 'S' : 'N';
@@ -261,7 +263,7 @@ export class HomePage {
     c.DenominazioneConvivente = slide3.get('denominazioneConvivente').value;
     c.CodiceFiscaleConvivente = slide3.get('codiceFiscaleConvivente').value;
     c.ProfessioneConvivente = slide3.get('professioneConvivente').value;
-    c.DataNascitaConvivente = this.datepipe.transform(slide3.get('dataNascitaConvivente').value,'dd-MM-yyyy') ;
+    c.DataNascitaConvivente = slide3.get('dataNascitaConvivente').value ? this.datepipe.transform(slide3.get('dataNascitaConvivente').value,'dd-MM-yyyy') : "" ;
     c.Professione = slide3.get('professione').value;
     c.AbitazioneProprieta = slide3.get('abitazioneProprieta').value ? 'S' : 'N';
     c.TipoAbitazione = slide3.get('tipoAbitazione').value;
