@@ -232,9 +232,6 @@
             <ion-grid>
               <ion-row>
                 <ion-col ion-item col-2>
-                  <ion-label stacked>Com.preferita</ion-label>
-                </ion-col>
-                <ion-col ion-item col-2>
                   <ion-label stacked>Dati Personali</ion-label>
                 </ion-col>
                 <ion-col ion-item col-2>
@@ -251,13 +248,6 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col ion-item col-2>
-                  <ion-select formControlName="commPreferita">
-                    <ion-option>Mail</ion-option>
-                    <ion-option>Lettera</ion-option>¬
-                    <ion-option>Telefono</ion-option>
-                  </ion-select>
-                </ion-col>
                 <ion-col ion-item col-2>
                   <ion-checkbox formControlName="datiPersonali"></ion-checkbox>
                 </ion-col>
@@ -316,7 +306,7 @@
           <form [formGroup]="slideThreeForm">
             <ion-grid>
               <ion-row>
-                <ion-col ion-item col-4>
+                <ion-col ion-item col-3>
                    <ion-label floating>Professione</ion-label>
                    <ion-select formControlName="professione">
                     <ion-option>Impiegato</ion-option>
@@ -326,11 +316,19 @@
                     <ion-option>Non Occupato</ion-option>
                    </ion-select>
                 </ion-col>
-                <ion-col ion-item col-4>
-                  <ion-label>Abitazione di proprietà</ion-label>
+                <ion-col ion-item col-3>
+                  <ion-label stacked>Abitazione di proprietà</ion-label>
                   <ion-checkbox formControlName="abitazioneProprieta"></ion-checkbox>
                 </ion-col>
-                <ion-col ion-item col-4>
+                <ion-col ion-item col-3>
+                  <ion-label floating>Comunicazione Pref.</ion-label>
+                   <ion-select formControlName="commPreferita">
+                    <ion-option>Mail</ion-option>
+                    <ion-option>Lettera</ion-option>¬
+                    <ion-option>Telefono</ion-option>
+                  </ion-select>
+                </ion-col>
+                <ion-col ion-item col-3>
                   <ion-label floating>Tipo Abitazione</ion-label>
                   <ion-select formControlName="tipoAbitazione">
                     <ion-option>Appartamento</ion-option>

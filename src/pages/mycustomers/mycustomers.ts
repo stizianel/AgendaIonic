@@ -59,9 +59,10 @@ export class MyCustomersPage {
           console.log("newToken:", this.newToken[1] );
           localStorage.setItem('token', this.newToken[1]);
           this.isLogin = 'true';
+          this.presentToast("Benvenuto in Agenda")
         };
       }, (error) => { this.isLogin = 'false';
-                      this.presentToast(error);;
+                      this.presentToast(error);
     });
         if(this.isLogin == 'true')
           this.navCtrl.push(CustomerlistPage);
