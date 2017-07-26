@@ -1,3 +1,5 @@
+import { BadRequestError } from './../../shared/bad-request-error';
+
 import { DatePipe } from '@angular/common';
 
 import { Component, ViewChild } from '@angular/core';
@@ -8,6 +10,7 @@ import { UsernameValidator } from './../../validators/username';
 import { AgeValidator } from './../../validators/age';
 
 import { Contact } from '../../models/contact';
+import { CustomerlistPage } from './../customerlist/customerlist';
 import { AgendaApi } from './../../shared/agenda-api.service';
 
 
@@ -98,13 +101,13 @@ export class HomePage {
     });
     loader.present().then(() => {
        this.agendaApi.getCinetto('99999')
-        .subscribe(
+      .subscribe(
           (contact: string) => {
             console.log("subscribe", contact);
             //this.contact = JSON.parse(contact);
             this.onContactRetrived(contact);
         loader.dismiss();
-    });
+      });
           console.log("tipo:", typeof this.contact);  
     });
   }
@@ -198,8 +201,15 @@ export class HomePage {
             alert("Inserimento effettuato");
             console.log("RESP:", resp);
             this.onSaveComplete();
+            this.navCtrl.push(CustomerlistPage);
           },
-          (error: any) => this.errorMessage = <any>error
+          (error: Response) => {
+            if(error instanceof BadRequestError )
+              alert('errore nei dati trasmessi');
+            else {
+              throw error;
+            }
+          }
         );
 
       // this.agendaApi.testPost().subscribe(

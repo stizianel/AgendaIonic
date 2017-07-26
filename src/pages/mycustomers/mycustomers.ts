@@ -1,3 +1,5 @@
+import { NotFoundError } from './../../shared/not-found-error';
+import { AppError } from './../../shared/app-error';
 
 import { HomePage } from './../home/home';
 import { CustomerlistPage } from './../customerlist/customerlist';
@@ -46,10 +48,19 @@ export class MyCustomersPage {
 
   loginToAgenda(){
     this.agendaApi.getToken()
-      .subscribe((token) => {
+      .subscribe(
+        (token) => {
         console.log("loginToAgenda", token);
         this.token = token;
-      });
+      },(error: AppError) => {
+        if (error instanceof NotFoundError)
+          alert('Not Found Error');
+        else {
+          alert('Generic error');
+          console.log(error);
+        }
+      }
+      );
     
     this.agendaApi.getLogin(this.loginData, this.token)
       .subscribe((logResp) => {
@@ -59,13 +70,12 @@ export class MyCustomersPage {
           console.log("newToken:", this.newToken[1] );
           localStorage.setItem('token', this.newToken[1]);
           this.isLogin = 'true';
-          this.presentToast("Benvenuto in Agenda")
         };
       }, (error) => { this.isLogin = 'false';
                       this.presentToast(error);
-    });
+      });
         if(this.isLogin == 'true')
-          this.navCtrl.push(CustomerlistPage);
+          this.presentToast("Benvenuto in Agenda")
   }
 
   showLoader(){
@@ -79,7 +89,7 @@ export class MyCustomersPage {
    presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
+      duration: 5000,
       position: 'bottom',
       dismissOnPageChange: true
     });

@@ -10,13 +10,21 @@
     <ion-title>Elenco Clienti</ion-title>
   </ion-navbar>
 
+  <ion-toolbar>
+    <ion-searchbar *ngIf="isOn"
+                   placeholder="Search"
+                   [(ngModel)]="queryText"
+                   (ionInput)="updateCustomers($event)"
+                   >
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let cust of customers" (click)="itemTapped($event, cust)">
-      {{ cust.denominazione }}
+    <button ion-item *ngFor="let cust of temp_customers" (click)="itemTapped($event, cust)">
+      {{ cust.Denominazione }}
     </button>
     
   </ion-list>
