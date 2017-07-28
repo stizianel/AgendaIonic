@@ -1,8 +1,8 @@
-import { StatusBar } from '@ionic-native/status-bar';
+//import { StatusBar } from '@ionic-native/status-bar';
 import { AppError } from './../../shared/app-error';
 
 import { CustomerHomePage } from './../customer-home/customer-home';
-import { CustomerDetailPage } from './../customer-detail/customer-detail';
+//import { CustomerDetailPage } from './../customer-detail/customer-detail';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AgendaApi } from './../../shared/agenda-api.service';

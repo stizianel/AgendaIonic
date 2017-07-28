@@ -2,12 +2,67 @@
 <ion-header>
   <ion-navbar>   
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  <h2>Anagrafica</h2>
-  <h3>Nome: {{cust.Denominazione}}</h3>
-  <h4>Chiave: {{cust.CFPiva}}</h4>
+  <ion-card>
+    <ion-card-header>Dati di base</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <button ion-item>
+          <ion-icon name="contact" item-start></ion-icon>
+          {{ contact.Denominazione }}
+        </button>
+        <button ion-item>
+          <ion-icon name="card" item-start></ion-icon>
+          {{ contact.CodFiscale }}
+        </button>
+        <button ion-item>
+          <ion-icon name="phone-portrait" item-start></ion-icon>
+          {{ contact.Cellulare }}
+        </button>
+        <button ion-item>
+          <ion-icon name="mail" item-start></ion-icon>
+          {{ contact.Mail }}
+        </button>
+        <button ion-item *ngIf="contact.MailAlternativa">
+          <ion-icon name="mail" item-start></ion-icon>
+          {{ contact.MailAlternativa }}
+        </button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Indirizzo</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <button ion-item class="icon-text">
+          <ion-icon name="globe" item-start ></ion-icon>
+          {{ contact.Comune }}
+        </button>
+        <button ion-item class="icon-text"> 
+          <ion-icon name="flag" item-start></ion-icon>
+          {{ contact.Indirizzo }}
+        </button>
+        <button ion-item *ngIf="contact.Presso">
+          <ion-icon name="contacts" item-start></ion-icon>
+          {{ contact.Presso }}
+        </button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Dati Personali</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <button ion-item>
+          <ion-icon name="body" item-start></ion-icon>
+          {{ contact.DataNascita }}
+        </button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

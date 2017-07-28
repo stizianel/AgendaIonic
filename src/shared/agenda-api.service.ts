@@ -28,6 +28,7 @@ private risposta: string;
 private agendaUrl = 'http://192.168.1.250/WS_AgeDemo/AgeService.svc';
 //private agendaPost = 'http://localhost:5050/AgeService.svc/updatecontact';
 //private agendaPost = 'http://localhost:49697/Api/Questionarios';
+//private agendaBig = 'http://2.234.133.94/ws_Agenda/AgeService.svc';
 private agendaTest = '/test';
 private postResult: any = {};
 private currentContact: any = {};
@@ -106,6 +107,7 @@ private anagrafica: any;
 
     getAnag(pid) {
         return this.http.get(`${this.agendaUrl}/anag/${pid}`)
+        //return this.http.get(`${this.agendaBig}/anag/99999`)
             .catch((error: Response) => {
                 return Observable.throw(new AppError(error.json()))
             })

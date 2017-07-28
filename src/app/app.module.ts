@@ -1,4 +1,4 @@
-import { AppErrorHandler } from './../shared/app-error-handler';
+//import { AppErrorHandler } from './../shared/app-error-handler';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -48,7 +48,7 @@ import { DatePipe } from '@angular/common';
     SplashScreen,
     AgendaApi,
     DatePipe,
-    {provide: ErrorHandler, useClass: AppErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

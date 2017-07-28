@@ -19,7 +19,7 @@ export class CustomerDetailPage {
 
   cust: any;
   token: any;
-  contact: Contact;
+  contact: Contact = new Contact;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
